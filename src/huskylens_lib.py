@@ -1,5 +1,5 @@
 #
-#  Huskylens Python Driver 1.5 (2024/12/15)
+#  Huskylens Python Driver 1.6 (2024/12/21)
 #  file: huskylens_lib.py
 #  (only test on ESP32-C3, version='v1.23.0 on 2024-06-02')
 #
@@ -23,6 +23,11 @@
 #     * Refactoring: Changed the recognition algorithm specification 
 #                    from string type to int type (enum like use)
 #                    change method name (read_tag -> read_tags, read_block -> read_blocks)
+#
+#  version 1.6(2024/12/21)
+#     * Feature Addition: (func: read_arrows)
+#                         Support for return values (ARROWS type) when LINE.TRACKING 
+#                         is specified for AI camera
 #
 #
 
@@ -129,6 +134,37 @@ class HuskyLens:
         while parse_pos < read_size:
             (val, data_size) = self.parse_return_data(buf[parse_pos:])
             if val[0] == 'block':
+                ret_val.append(val)
+            if data_size:
+               parse_pos += data_size
+            else:
+               break  # parse Error
+        return ret_val
+    
+    def read_arrows(self):
+        buf = bytearray(100)
+        ret_val = []
+        self.send_CMD_REQ_ARROWS()
+        utime.sleep(0.1)        # wait for 100msec
+    
+        # check general MicroPython(general MPU) or LEGO Special MicroPython
+        if 'LEGO' in self.machine:
+            # for LEGO MicroPython (special specification?)
+            read_size = self.uart.read(buf)
+        else:   
+            # for general MPU/Boards eg; ESP, RP2040
+            read_size = self.uart.readinto(buf)
+
+        # check received data
+        if read_size == 0:
+            return ret_val    # return []
+        if buf[0] != COMMAND_RETURN_HEADER:
+            return ret_val    # return []    # illegal data
+
+        parse_pos = 0
+        while parse_pos < read_size:
+            (val, data_size) = self.parse_return_data(buf[parse_pos:])
+            if val[0] == 'arrow':
                 ret_val.append(val)
             if data_size:
                parse_pos += data_size

@@ -1,6 +1,14 @@
 #
 # test code for Huskylens code (Python on LEGO SPIKE Version)
+# V1.1
+#  
 #
+
+# Revision History 
+# Date Author Description 
+# 2024-12-DD V1.0 Initial creation 
+# 2024-12-22 V1.1 Added LINE_TRACKING  test
+
 
 import time
 from hub import port
@@ -22,17 +30,32 @@ port.F.baud(9600)
 from huskylens_lib import HuskyLens
 husky = HuskyLens(port.F)
 
-#
-# Set the recognition alogorythm type for the AI camera."
-#
 from huskylens_lib import Algo
-husky.send_CMD_REQ_ALGO(Algo.COLOR_RECOGNITION)
 
-#
-# read loop
-#
 while True:
-    print(husky.read_blocks())
+
+    #
+    # Set the recognition alogorythm type to COLOR RECOGNITION
+    #
+    husky.send_CMD_REQ_ALGO(Algo.COLOR_RECOGNITION)
+
+    #
+    # read loop
+    #
+    for _ in range(100):
+        print(husky.read_blocks())
+
+    #
+    # Set the recognition alogorythm type to LINE TRACKING
+    #
+    husky.send_CMD_REQ_ALGO(Algo.LINE_TRACKING)
+    #
+    # read loop
+    #
+    for _ in range(100):
+        print(husky.read_arrows())
+
+
 
 
 #
