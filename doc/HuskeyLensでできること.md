@@ -13,6 +13,7 @@
 - 対象物の認識 (Object Recognition)
   - 機能：画面の中にどのような物（動物、家具、自転車等）があるかを特定する
   - 20種類のObjectが学習済み
+     - aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, dining-able, dog, horse, motorbike, person, potted lant, sheep, sofa, train, TV   
   - 学習：学習済みであるが、対象を認識させるには学習必要
   - 位置情報：未確認
   - 制約：あらかじめ学習した種類以外の別の種類は学習できない
