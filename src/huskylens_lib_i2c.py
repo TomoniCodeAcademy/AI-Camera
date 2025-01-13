@@ -8,9 +8,8 @@ import time
 
 DEVICE_ADDR = 0x32
 
-from machine import Pin, I2C
-i2c = I2C(0, scl=Pin(7), sda=Pin(6), freq=100000)
-
+# from machine import Pin, I2C
+# i2c = I2C(0, scl=Pin(7), sda=Pin(6), freq=100000)
 # >>> hex(i2c.scan()[0])
 # '0x32'
 
