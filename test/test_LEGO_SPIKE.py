@@ -1,5 +1,5 @@
 #
-# test code for Huskylens code (Python on LEGO SPIKE Version)
+# test code for Huskylens (Python on LEGO SPIKE)
 # V1.1
 #  
 #
@@ -35,10 +35,9 @@ from huskylens_lib import Algo
 while True:
 
     #
-    # Set the recognition alogorythm type to COLOR RECOGNITION
+    # Set the recognition alogorythm to COLOR RECOGNITION
     #
     husky.send_CMD_REQ_ALGO(Algo.COLOR_RECOGNITION)
-
     #
     # read loop
     #
@@ -46,7 +45,7 @@ while True:
         print(husky.read_blocks())
 
     #
-    # Set the recognition alogorythm type to LINE TRACKING
+    # Set the recognition alogorythm to LINE TRACKING
     #
     husky.send_CMD_REQ_ALGO(Algo.LINE_TRACKING)
     #
